@@ -26,7 +26,12 @@ class TestRollClubUI:
         wait = WebDriverWait(driver, 10)
         filter_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//*[contains(text(), 'Види')]")))
         filter_btn.click()
-        assert driver.find_element(By.CLASS_SYMBOL, "product-block") 
+        time.sleep(1)
+        salmon = wait.until(EC.element_to_be_clickable((By.XPATH, "//*[contains(text(), 'Лосось')]")))
+        salmon.click()
+        time.sleep(2)
+        products = driver.find_elements(By.CLASS_NAME, "product")
+        assert len(products) > 0, "Товари не знайдено після фільтрації"
 
     def test_tc_003_cart_empty_state(self, driver):
         """Тест 4: Перевірка порожнього кошика"""
