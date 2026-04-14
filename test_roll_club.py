@@ -46,3 +46,11 @@ class TestRollClubUI:
         wait = WebDriverWait(driver, 10)
         footer = wait.until(EC.presence_of_element_located((By.TAG_NAME, "footer")))
         assert footer.is_displayed(), "Нижня панель сайту не завантажилась"
+
+    def test_tc_005_promotions_page(self, driver):
+        """Тест 5: Перевірка переходу на сторінку Акцій (регресійний тест)"""
+        driver.get("https://roll-club.ua/uk/")
+        wait = WebDriverWait(driver, 10)
+        promo_link = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Акції")))
+        promo_link.click()
+        assert "aktsii" in driver.current_url or "akcii" in driver.current_url
