@@ -39,3 +39,10 @@ class TestRollClubUI:
         wait = WebDriverWait(driver, 10)
         empty_msg = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "cart-empty")))
         assert empty_msg.is_displayed()
+
+    def test_tc_004_footer_presence(self, driver):
+        """Тест 3: Перевірка завантаження структури сторінки (Footer check)"""
+        driver.get("https://roll-club.ua/uk/")
+        wait = WebDriverWait(driver, 10)
+        footer = wait.until(EC.presence_of_element_located((By.TAG_NAME, "footer")))
+        assert footer.is_displayed(), "Нижня панель сайту не завантажилась"
