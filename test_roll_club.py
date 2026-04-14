@@ -19,5 +19,11 @@ class TestRollClubUI:
         wait = WebDriverWait(driver, 10)
         roles_link = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Роли")))
         roles_link.click()
-        # Тут спеціально стара версія, яка впаде (roli замість rolly)
         assert "roli" in driver.current_url
+
+    def test_tc_002_filter_salmon(self, driver):
+        """Тест 2: Фільтрація за інгредієнтом (Лосось)"""
+        wait = WebDriverWait(driver, 10)
+        filter_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//*[contains(text(), 'Види')]")))
+        filter_btn.click()
+        assert driver.find_element(By.CLASS_SYMBOL, "product-block") 
