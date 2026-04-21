@@ -1,0 +1,19 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest cache
+.pytest_cache/
+
+# Selenium / Driver logs
+geckodriver.log
+ghostdriver.log
+
+# Environments (якщо створиш віртуальне оточення)
+venv/
+ENV/
+
+# IDE settings
+.idea/
+.vscode/
