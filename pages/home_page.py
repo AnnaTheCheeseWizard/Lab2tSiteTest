@@ -1,34 +1,32 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from .base_page import BasePage
 import time
 
-class HomePage:
-    def __init__(self, driver):
-        self.driver = driver
-        self.wait = WebDriverWait(driver, 10)
+class HomePage(BasePage):
+    ROLES_LINK = (By.LINK_TEXT, "Роли")
+    FILTER_TYPES_BTN = (By.XPATH, "//*[contains(text(), 'Види')]")
+    SALMON_OPTION = (By.XPATH, "//*[contains(text(), 'Лосось')]")
+    PRODUCT_CARDS = (By.CLASS_NAME, "product")
+    FOOTER = (By.TAG_NAME, "footer")
+    PROMO_LINK = (By.LINK_TEXT, "Акції")
 
     def open(self):
         self.driver.get("https://roll-club.ua/uk/")
 
     def go_to_roles(self):
-        roles_link = self.wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Роли")))
-        roles_link.click()
+        self.wait.until(self.ec.element_to_be_clickable(self.ROLES_LINK)).click()
 
     def filter_salmon(self):
-        filter_btn = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//*[contains(text(), 'Види')]")))
-        filter_btn.click()
+        self.wait.until(self.ec.element_to_be_clickable(self.FILTER_TYPES_BTN)).click()
         time.sleep(1)
-        salmon = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//*[contains(text(), 'Лосось')]")))
-        salmon.click()
+        self.wait.until(self.ec.element_to_be_clickable(self.SALMON_OPTION)).click()
         time.sleep(2)
 
     def get_products(self):
-        return self.driver.find_elements(By.CLASS_NAME, "product")
+        return self.driver.find_elements(*self.PRODUCT_CARDS)
 
     def get_footer(self):
-        return self.wait.until(EC.presence_of_element_located((By.TAG_NAME, "footer")))
+        return self.wait.until(self.ec.presence_of_element_located(self.FOOTER))
 
     def go_to_promotions(self):
-        promo_link = self.wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Акції")))
-        promo_link.click()
+        self.wait.until(self.ec.element_to_be_clickable(self.PROMO_LINK)).click()
