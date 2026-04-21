@@ -1,11 +1,15 @@
 from selenium.webdriver.common.by import By
-from .base_page import BasePage
+from selenium.webdriver.support import expected_conditions as EC
 
-class CartPage(BasePage):
-    EMPTY_CART_MSG = (By.CLASS_NAME, "cart-empty")
+class CartPage:
+    def __init__(self, driver, wait):
+        self.driver = driver
+        self.wait = wait
+        
+        self.empty_msg_visible = EC.visibility_of_element_located((By.CLASS_NAME, "cart-empty"))
 
     def open(self):
         self.driver.get("https://roll-club.ua/uk/cart/")
 
-    def get_empty_message(self):
-        return self.wait.until(self.ec.presence_of_element_located(self.EMPTY_CART_MSG))
+    def is_empty_message_displayed(self):
+        return self.wait.until(self.empty_msg_visible).is_displayed()
